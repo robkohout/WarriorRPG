@@ -1,7 +1,7 @@
 ﻿// Rob Kohout All Rights Reserved
 
 
-#include "Warrior/Public/Characters/WarriorBaseCharacter.h"
+#include "Characters/WarriorBaseCharacter.h"
 
 
 AWarriorBaseCharacter::AWarriorBaseCharacter()

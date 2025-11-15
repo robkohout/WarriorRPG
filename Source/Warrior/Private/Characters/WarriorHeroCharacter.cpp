@@ -1,5 +1,12 @@
 ﻿// Rob Kohout All Rights Reserved
 
 
-#include "Warrior/Public/Characters/WarriorHeroCharacter.h"
+#include "Characters/WarriorHeroCharacter.h"
+#include "WarriorDebugHelper.h"
 
+void AWarriorHeroCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	Debug::Print(TEXT("Working"));
+}
