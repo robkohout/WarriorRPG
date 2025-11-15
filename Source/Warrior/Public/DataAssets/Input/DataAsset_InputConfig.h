@@ -32,7 +32,7 @@ class WARRIOR_API UDataAsset_InputConfig : public UDataAsset
 	GENERATED_BODY()
 	
 public:
-	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag);
+	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputMappingContext* DefaultMappingContext;
