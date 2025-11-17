@@ -6,6 +6,7 @@
 #include "WarriorBaseCharacter.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
 class UCameraComponent;
@@ -18,6 +19,8 @@ class WARRIOR_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 
 public:
 	AWarriorHeroCharacter();
+	
+	FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const { return HeroCombatComponent; }
 	
 protected:
 	//~ Begin APawn Interface
@@ -36,6 +39,9 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta =( AllowPrivateAccess = "true"))
 	UCameraComponent* FollowCamera;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta =( AllowPrivateAccess = "true"))
+	UHeroCombatComponent* HeroCombatComponent;
 	
 #pragma endregion
 	
