@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "DataAsset_StartUpDataBase.generated.h"
 
+class UGameplayEffect;
 class UWarriorAbilitySystemComponent;
 class UWarriorGameplayAbility;
 /**
@@ -27,4 +28,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
 	TArray<TSubclassOf<UWarriorGameplayAbility>> ReactivateAbilities;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
+	TArray<TSubclassOf<UGameplayEffect>> StartUpGameplayEffects;
 };
