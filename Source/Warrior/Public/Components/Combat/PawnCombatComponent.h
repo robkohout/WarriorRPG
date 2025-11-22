@@ -42,6 +42,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Warrior | Combat")
 	FGameplayTag CurrentEquippedWeaponTag;
 	
+protected:
+	TArray<AActor*> OverlappedActors;
+	
 private:
 	UPROPERTY()
 	TMap<FGameplayTag, AWarriorWeaponBase*> CharacterCarriedWeaponMap;  
