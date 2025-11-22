@@ -2,6 +2,9 @@
 
 
 #include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
+
+#include "WarriorGameplayTags.h"
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Characters/WarriorHeroCharacter.h"
 #include "Controllers/WarriorHeroController.h"
 
@@ -28,4 +31,37 @@ AWarriorHeroController* UWarriorHeroGameplayAbility::GetHeroControllerFromActorI
 UHeroCombatComponent* UWarriorHeroGameplayAbility::GetHeroCombatComponentFromActorInfo()
 {
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
+}
+
+FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecHandle(
+	TSubclassOf<UGameplayEffect> EffectClass, 
+	float InWeaponBaseDamage, 
+	FGameplayTag InCurrentAttackTypeTag,
+	int32 InCurrentComboCount)
+{
+	check(EffectClass);
+	
+	AActor* SourceActor = GetAvatarActorFromActorInfo();
+	FGameplayEffectContextHandle ContextHandle = GetWarriorAbilitySystemComponentFromActorInfo()->MakeEffectContext();
+	ContextHandle.SetAbility(this);
+	ContextHandle.AddSourceObject(SourceActor);
+	ContextHandle.AddInstigator(SourceActor, SourceActor);
+	
+	FGameplayEffectSpecHandle EffectSpecHandle = GetWarriorAbilitySystemComponentFromActorInfo()->MakeOutgoingSpec(
+		EffectClass,
+		GetAbilityLevel(),
+		ContextHandle);
+	
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(
+		WarriorGameplayTags::Shared_SetByCaller_BaseDamage,
+		InWeaponBaseDamage);
+	
+	if (InCurrentAttackTypeTag.IsValid())
+	{
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(
+		InCurrentAttackTypeTag,
+		InCurrentComboCount);
+	}
+	
+	return EffectSpecHandle;
 }
