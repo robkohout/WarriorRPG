@@ -2,7 +2,6 @@
 
 
 #include "Items/Weapons/WarriorWeaponBase.h"
-#include "WarriorDebugHelper.h"
 #include "Components/BoxComponent.h"
 
 
@@ -31,13 +30,13 @@ void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(
 {
 	APawn* WeaponOwningPawn = GetInstigator<APawn>();
 	
-	checkf(WeaponOwningPawn, TEXT("An instigator needs to be assigned as the owning pawn of the weapon: %s") , *GetName());
+	checkf(WeaponOwningPawn, TEXT("An instigator needs to be assigned as the owning pawn for the weapon: %s") , *GetName());
 	
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
 		if (WeaponOwningPawn != HitPawn)
 		{
-			Debug::Print(GetName() + TEXT(" begin overlap with ") + HitPawn->GetName(), FColor::Green);
+			OnWeaponHitTarget.ExecuteIfBound(HitPawn);
 		}
 		
 		// TODO: Implement hit Check for enemy characters 
@@ -52,13 +51,13 @@ void AWarriorWeaponBase::OnCollisionBoxEndOverlap(
 {
 	APawn* WeaponOwningPawn = GetInstigator<APawn>();
 	
-	checkf(WeaponOwningPawn, TEXT("An instigator needs to be assigned as the owning pawn of the weapon: %s") , *GetName());
+	checkf(WeaponOwningPawn, TEXT("An instigator needs to be assigned as the owning pawn for the weapon: %s") , *GetName());
 	
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
 		if (WeaponOwningPawn != HitPawn)
 		{
-			Debug::Print(GetName() + TEXT(" end overlap with ") + HitPawn->GetName(), FColor::Red);
+			OnWeaponPulledFromTarget.ExecuteIfBound(HitPawn);
 		}
 		
 		// TODO: Implement hit Check for enemy characters 
