@@ -37,7 +37,7 @@ FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecH
 	TSubclassOf<UGameplayEffect> EffectClass, 
 	float InWeaponBaseDamage, 
 	FGameplayTag InCurrentAttackTypeTag,
-	int32 InCurrentComboCount)
+	int32 InUsedComboCount)
 {
 	check(EffectClass);
 	
@@ -60,7 +60,7 @@ FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecH
 	{
 		EffectSpecHandle.Data->SetSetByCallerMagnitude(
 		InCurrentAttackTypeTag,
-		InCurrentComboCount);
+		InUsedComboCount);
 	}
 	
 	return EffectSpecHandle;

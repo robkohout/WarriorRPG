@@ -32,7 +32,7 @@ public:
 		TSubclassOf<UGameplayEffect> EffectClass, 
 		float InWeaponBaseDamage, 
 		FGameplayTag InCurrentAttackTypeTag, 
-		int32 InCurrentComboCount);
+		int32 InUsedComboCount);
 	
 private:
 	TWeakObjectPtr<AWarriorHeroCharacter> CachedWarriorHeroCharacter;
