@@ -12,4 +12,14 @@ namespace Debug
 		}
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Message);
 	}
+	
+	static void Print(const FString& FloatTitle, float FloatValueToPrint, int32 InKey = -1, const FColor& Color = FColor::MakeRandomColor())
+	{
+		const FString FinalMessage = FloatTitle + TEXT(": ") + FString::SanitizeFloat(FloatValueToPrint);
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(InKey, 7.f, Color, FinalMessage);
+		}
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *FinalMessage);
+	}
 }
