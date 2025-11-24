@@ -4,7 +4,6 @@
 #include "AbilitySystem/GEExecCalc/GEExecCalc_DamageTaken.h"
 #include "WarriorGameplayTags.h"
 #include "AbilitySystem/WarriorAttributeSet.h"
-#include "WarriorDebugHelper.h"
 
 struct FWarriorDamageCapture
 {
@@ -109,7 +108,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(
 	}
 	
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefensePower;
-	Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
+	//Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
 	
 	if (FinalDamageDone > 0.f)
 	{
