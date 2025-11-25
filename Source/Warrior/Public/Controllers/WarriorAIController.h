@@ -17,6 +17,10 @@ class WARRIOR_API AWarriorAIController : public AAIController
 public:
 	AWarriorAIController(const FObjectInitializer& ObjectInitializer);
 	
+	//~Begin IGenericTeamAgentInterface Interface
+	virtual ETeamAttitude::Type GetTeamAttitudeTowards(const AActor& Other) const override;
+	//~End IGenericTeamAgentInterface Interface
+	
 protected:
 	UFUNCTION()
 	virtual void OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
