@@ -22,3 +22,10 @@ enum class EWarriorSuccessType : uint8
 	Successful,
 	Failed
 };
+
+UENUM()
+enum class EWarriorTeamType : uint8
+{
+	Hero,
+	Enemy
+};

@@ -2,21 +2,16 @@
 
 
 #include "Controllers/WarriorAIController.h"
-#include "WarriorDebugHelper.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/CrowdFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "WarriorTypes/WarriorEnumTypes.h"
 
 
 AWarriorAIController::AWarriorAIController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>("PathFollowingComponent"))
 {
-	if (UCrowdFollowingComponent* CrowdComp = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
-	{
-		Debug::Print(TEXT("CrowdFollowingComponent valid"), FColor::Green);
-	}
-	
 	EnemySenseConfig_Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("EnemySenseConfig_Sight"));
 	EnemySenseConfig_Sight->DetectionByAffiliation.bDetectEnemies = true;
 	EnemySenseConfig_Sight->DetectionByAffiliation.bDetectFriendlies = false;
@@ -30,7 +25,7 @@ AWarriorAIController::AWarriorAIController(const FObjectInitializer& ObjectIniti
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &ThisClass::OnEnemyPerceptionUpdated);
 	
-	SetGenericTeamId(FGenericTeamId(1));
+	SetGenericTeamId(FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Enemy)));
 }
 
 ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& Other) const
@@ -45,6 +40,29 @@ ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& O
 	}
 	
 	return ETeamAttitude::Friendly;
+}
+
+void AWarriorAIController::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	if (UCrowdFollowingComponent* CrowdComponent = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
+	{
+		CrowdComponent->SetCrowdSimulationState(bEnableDetourCrowdAvoidance ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
+		
+		switch (DetourCrowdAvoidanceQuality)
+		{
+		case 1:	CrowdComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Low);		break;
+		case 2: CrowdComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Medium);	break;
+		case 3:	CrowdComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Good);		break;
+		case 4: CrowdComponent->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::High);		break;
+		default: break;
+		}
+		
+		CrowdComponent->SetAvoidanceGroup(static_cast<uint8>(EWarriorTeamType::Enemy));
+		CrowdComponent->SetGroupsToAvoid(static_cast<uint8>(EWarriorTeamType::Enemy));
+		CrowdComponent->SetCrowdCollisionQueryRange(CollisionQueryRange);
+	}
 }
 
 void AWarriorAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
