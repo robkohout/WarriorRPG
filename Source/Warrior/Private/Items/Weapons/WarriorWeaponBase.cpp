@@ -2,6 +2,7 @@
 
 
 #include "Items/Weapons/WarriorWeaponBase.h"
+#include "WarriorFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 
 
@@ -34,12 +35,10 @@ void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(
 	
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(HitPawn);
 		}
-		
-		// TODO: Implement hit Check for enemy characters 
 	}
 }
 
@@ -55,11 +54,9 @@ void AWarriorWeaponBase::OnCollisionBoxEndOverlap(
 	
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponPulledFromTarget.ExecuteIfBound(HitPawn);
 		}
-		
-		// TODO: Implement hit Check for enemy characters 
 	}
 }
