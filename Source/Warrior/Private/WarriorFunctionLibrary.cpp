@@ -3,6 +3,7 @@
 
 #include "WarriorFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 
@@ -64,4 +65,14 @@ UPawnCombatComponent* UWarriorFunctionLibrary::BP_GetPawnCombatComponentFromActo
 	OutValidType = CombatComponent ? EWarriorValidType::Valid : EWarriorValidType::Invalid;
 	
 	return CombatComponent;
+}
+
+FGenericTeamId UWarriorFunctionLibrary::GetHeroTeamId()
+{
+	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
+}
+
+FGenericTeamId UWarriorFunctionLibrary::GetEnemyTeamId()
+{
+	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Enemy));
 }

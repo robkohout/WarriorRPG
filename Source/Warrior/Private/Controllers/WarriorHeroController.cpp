@@ -2,11 +2,11 @@
 
 
 #include "Controllers/WarriorHeroController.h"
-#include "WarriorTypes/WarriorEnumTypes.h"
+#include "WarriorFunctionLibrary.h"
 
 AWarriorHeroController::AWarriorHeroController()
 {
-	HeroTeamId = FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
+	HeroTeamId = UWarriorFunctionLibrary::GetHeroTeamId();
 }
 
 FGenericTeamId AWarriorHeroController::GetGenericTeamId() const

@@ -2,11 +2,11 @@
 
 
 #include "Controllers/WarriorAIController.h"
+#include "WarriorFunctionLibrary.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/CrowdFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
-#include "WarriorTypes/WarriorEnumTypes.h"
 
 
 AWarriorAIController::AWarriorAIController(const FObjectInitializer& ObjectInitializer)
@@ -25,7 +25,7 @@ AWarriorAIController::AWarriorAIController(const FObjectInitializer& ObjectIniti
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &ThisClass::OnEnemyPerceptionUpdated);
 	
-	SetGenericTeamId(FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Enemy)));
+	SetGenericTeamId(UWarriorFunctionLibrary::GetEnemyTeamId());
 }
 
 ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& Other) const
@@ -34,7 +34,7 @@ ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& O
 	
 	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
 	
-	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() != GetGenericTeamId())
+	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() == UWarriorFunctionLibrary::GetHeroTeamId())
 	{
 		return ETeamAttitude::Hostile;
 	}
@@ -59,19 +59,22 @@ void AWarriorAIController::BeginPlay()
 		default: break;
 		}
 		
-		CrowdComponent->SetAvoidanceGroup(static_cast<uint8>(EWarriorTeamType::Enemy));
-		CrowdComponent->SetGroupsToAvoid(static_cast<uint8>(EWarriorTeamType::Enemy));
+		CrowdComponent->SetAvoidanceGroup(UWarriorFunctionLibrary::GetEnemyTeamId());
+		CrowdComponent->SetGroupsToAvoid(UWarriorFunctionLibrary::GetEnemyTeamId());
 		CrowdComponent->SetCrowdCollisionQueryRange(CollisionQueryRange);
 	}
 }
 
 void AWarriorAIController::OnEnemyPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Stimulus.WasSuccessfullySensed() && Actor)
+	if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
 	{
-		if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+		if (!BlackboardComponent->GetValueAsObject(FName("TargetActor")))
 		{
-			BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			if (Stimulus.WasSuccessfullySensed() && Actor)
+			{
+				BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
+			}
 		}
 	}
 }
