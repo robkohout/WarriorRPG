@@ -19,7 +19,8 @@ public class Warrior : ModuleRules
 			"GameplayTasks",
 			"GameplayAbilities",
 			"UMG",
-			"AIModule"
+			"AIModule",
+			"AnimGraphRuntime"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

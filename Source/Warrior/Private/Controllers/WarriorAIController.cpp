@@ -25,7 +25,7 @@ AWarriorAIController::AWarriorAIController(const FObjectInitializer& ObjectIniti
 	EnemyPerceptionComponent->SetDominantSense(UAISenseConfig_Sight::StaticClass());
 	EnemyPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &ThisClass::OnEnemyPerceptionUpdated);
 	
-	SetGenericTeamId(UWarriorFunctionLibrary::GetEnemyTeamId());
+	SetGenericTeamId(UWarriorFunctionLibrary::NativeGetEnemyTeamId());
 }
 
 ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& Other) const
@@ -34,7 +34,7 @@ ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor& O
 	
 	const IGenericTeamAgentInterface* OtherTeamAgent = Cast<const IGenericTeamAgentInterface>(PawnToCheck->GetController());
 	
-	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() == UWarriorFunctionLibrary::GetHeroTeamId())
+	if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() == UWarriorFunctionLibrary::NativeGetHeroTeamId())
 	{
 		return ETeamAttitude::Hostile;
 	}
@@ -59,8 +59,8 @@ void AWarriorAIController::BeginPlay()
 		default: break;
 		}
 		
-		CrowdComponent->SetAvoidanceGroup(UWarriorFunctionLibrary::GetEnemyTeamId());
-		CrowdComponent->SetGroupsToAvoid(UWarriorFunctionLibrary::GetEnemyTeamId());
+		CrowdComponent->SetAvoidanceGroup(UWarriorFunctionLibrary::NativeGetEnemyTeamId());
+		CrowdComponent->SetGroupsToAvoid(UWarriorFunctionLibrary::NativeGetEnemyTeamId());
 		CrowdComponent->SetCrowdCollisionQueryRange(CollisionQueryRange);
 	}
 }

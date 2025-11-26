@@ -67,12 +67,12 @@ UPawnCombatComponent* UWarriorFunctionLibrary::BP_GetPawnCombatComponentFromActo
 	return CombatComponent;
 }
 
-FGenericTeamId UWarriorFunctionLibrary::GetHeroTeamId()
+FGenericTeamId UWarriorFunctionLibrary::NativeGetHeroTeamId()
 {
 	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
 }
 
-FGenericTeamId UWarriorFunctionLibrary::GetEnemyTeamId()
+FGenericTeamId UWarriorFunctionLibrary::NativeGetEnemyTeamId()
 {
 	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Enemy));
 }

@@ -6,7 +6,7 @@
 
 AWarriorHeroController::AWarriorHeroController()
 {
-	HeroTeamId = UWarriorFunctionLibrary::GetHeroTeamId();
+	HeroTeamId = UWarriorFunctionLibrary::NativeGetHeroTeamId();
 }
 
 FGenericTeamId AWarriorHeroController::GetGenericTeamId() const
