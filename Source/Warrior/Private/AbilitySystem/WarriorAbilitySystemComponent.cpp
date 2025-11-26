@@ -2,7 +2,7 @@
 
 
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
-#include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
+#include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
 #include "WarriorTypes/WarriorStructTypes.h"
 
 
@@ -55,4 +55,27 @@ void UWarriorAbilitySystemComponent::RemoveGrantedHeroWeaponAbilities(TArray<FGa
 	}
 	
 	InSpecHandlesToRemove.Empty();
+}
+
+bool UWarriorAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag AbilityToActivate)
+{
+	check(AbilityToActivate.IsValid());
+	
+	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
+	
+	if (!FoundAbilitySpecs.IsEmpty())
+	{
+		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
+		
+		check(SpecToActivate);
+		
+		if (!SpecToActivate->IsActive())
+		{
+			return TryActivateAbility(SpecToActivate->Handle);
+		}
+	}
+	
+	return false;
 }
