@@ -8,6 +8,7 @@
 #include "WarriorTypes/WarriorEnumTypes.h"
 #include "WarriorFunctionLibrary.generated.h"
 
+struct FScalableFloat;
 struct FGenericTeamId;
 class UPawnCombatComponent;
 class UWarriorAbilitySystemComponent;
@@ -41,6 +42,9 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary")
 	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
+	
+	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary", meta = (DisplayName  = "Get Value At Level"))
+	static float GetScalableFloatValueAtLevel(FScalableFloat& InScalableFloat, float InLevel = 1.f);
 	
 	static FGenericTeamId NativeGetHeroTeamId();
 	

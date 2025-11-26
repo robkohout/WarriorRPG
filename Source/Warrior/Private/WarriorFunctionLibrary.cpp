@@ -82,6 +82,11 @@ bool UWarriorFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targe
 	return false;
 }
 
+float UWarriorFunctionLibrary::GetScalableFloatValueAtLevel(FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
 FGenericTeamId UWarriorFunctionLibrary::NativeGetHeroTeamId()
 {
 	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
