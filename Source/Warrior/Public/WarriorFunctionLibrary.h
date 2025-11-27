@@ -46,6 +46,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary", meta = (DisplayName  = "Get Value At Level"))
 	static float GetScalableFloatValueAtLevel(FScalableFloat& InScalableFloat, float InLevel = 1.f);
 	
+	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary")
+	static FGameplayTag ComputeHitReactionDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference);
+	
 	static FGenericTeamId NativeGetHeroTeamId();
 	
 	static FGenericTeamId NativeGetEnemyTeamId();
