@@ -4,6 +4,7 @@
 #include "WarriorFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GenericTeamAgentInterface.h"
+#include "WarriorDebugHelper.h"
 #include "WarriorGameplayTags.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
@@ -123,6 +124,19 @@ FGameplayTag UWarriorFunctionLibrary::ComputeHitReactionDirectionTag(AActor* InA
 		return WarriorGameplayTags::Shared_Status_HitReact_Right;
 	}
 	return WarriorGameplayTags::Shared_Status_HitReact_Front;
+}
+
+bool UWarriorFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+{
+	check(InAttacker && InDefender);
+	
+	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
+	const float Theshold = -0.1f;
+	
+	const FString DebugString = FString::Printf(TEXT("DotResult: %f %s"), DotResult, (DotResult < Theshold) ? TEXT("Valid Block") : TEXT("Invalid Block"));
+	Debug::Print(DebugString, (DotResult < Theshold) ? FColor::Green : FColor::Red);
+	
+	return DotResult < Theshold;
 }
 
 FGenericTeamId UWarriorFunctionLibrary::NativeGetHeroTeamId()

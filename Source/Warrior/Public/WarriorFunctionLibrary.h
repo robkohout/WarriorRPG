@@ -49,6 +49,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary")
 	static FGameplayTag ComputeHitReactionDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference);
 	
+	UFUNCTION(BlueprintPure, Category = "Warrior | FunctionLibrary")
+	static bool IsValidBlock(AActor* InAttacker, AActor* InDefender);
+	
 	static FGenericTeamId NativeGetHeroTeamId();
 	
 	static FGenericTeamId NativeGetEnemyTeamId();
