@@ -6,6 +6,7 @@
 #include "WarriorHeroGameplayAbility.h"
 #include "HeroGameplayAbility_TargetLock.generated.h"
 
+class UWarriorWidgetBase;
 /**
  * 
  */
@@ -35,6 +36,7 @@ private:
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
 	AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+	void DrawTargetLockWidget();
 	
 	void CancelTargetLockAbility();
 	void CleanUp();
@@ -51,9 +53,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
 	bool bShowPersistentDebugShape = false;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+	TSubclassOf<UWarriorWidgetBase> TargetLockWidgetClass;
+	
 	UPROPERTY()
 	TArray<AActor*> AvailableActorsToLock;
 	
 	UPROPERTY()
 	AActor* CurrentLockedActor;
+	
+	UPROPERTY()
+	UWarriorWidgetBase* DrawnTargetLockWidget;
 };
