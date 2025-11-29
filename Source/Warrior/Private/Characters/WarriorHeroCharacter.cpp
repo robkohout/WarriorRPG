@@ -4,7 +4,6 @@
 #include "Characters/WarriorHeroCharacter.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
-#include "WarriorDebugHelper.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -30,7 +29,8 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
 	CameraBoom->TargetArmLength = 200.0f;
 	CameraBoom->SocketOffset = FVector(0.0f, 55.0f, 65.0f);
 	CameraBoom->bUsePawnControlRotation = true;
-	
+	CameraBoom->bDoCollisionTest = false;
+
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
