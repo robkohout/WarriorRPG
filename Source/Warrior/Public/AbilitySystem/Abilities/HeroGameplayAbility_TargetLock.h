@@ -32,6 +32,9 @@ protected:
 		bool bWasCancelled) override;
 	//~End UGameplayAbility Interface
 	
+	UFUNCTION(BlueprintCallable)
+	void OnTargetLockTick(float DeltaTime);
+	
 private:
 	void TryLockOnTarget();
 	void GetAvailableActorsToLock();
