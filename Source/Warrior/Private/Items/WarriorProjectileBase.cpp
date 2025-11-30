@@ -2,8 +2,11 @@
 
 
 #include "Items/WarriorProjectileBase.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "NiagaraComponent.h"
-#include "WarriorDebugHelper.h"
+#include "WarriorFunctionLibrary.h"
+#include "WarriorGameplayTags.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
@@ -50,12 +53,41 @@ void AWarriorProjectileBase::OnProjectileHit(
 	FVector NormalImpulse, 
 	const FHitResult& Hit)
 {
-	if (OtherActor)
+	BP_OnSpawnProjectileHitFX(Hit.ImpactPoint);
+	
+	APawn* HitPawn = Cast<APawn>(OtherActor);
+	
+	if(!HitPawn || !UWarriorFunctionLibrary::IsTargetPawnHostile(GetInstigator<APawn>(), HitPawn))
 	{
-		Debug::Print(OtherActor->GetActorNameOrLabel());
-		
 		Destroy();
+		return;
 	}
+	
+	bool bIsValidBlock = false;
+	const bool bIsPlayerBlocking = UWarriorFunctionLibrary::NativeDoesActorHaveTag(HitPawn, WarriorGameplayTags::Player_Status_Blocking);
+	
+	if(bIsPlayerBlocking)
+	{
+		bIsValidBlock = UWarriorFunctionLibrary::IsValidBlock(this, HitPawn);
+	}
+	
+	FGameplayEventData Data;
+	Data.Instigator = this;
+	Data.Target = HitPawn;
+	
+	if(bIsValidBlock)
+	{
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			HitPawn, 
+			WarriorGameplayTags::Player_Event_SuccessfulBlock, 
+			Data);
+	}
+	else
+	{
+		// Apply projectile damage
+	}
+	
+	Destroy();
 }
 
 void AWarriorProjectileBase::OnProjectileBeginOverlap(
