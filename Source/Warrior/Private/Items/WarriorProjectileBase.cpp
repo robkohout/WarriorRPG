@@ -84,7 +84,7 @@ void AWarriorProjectileBase::OnProjectileHit(
 	}
 	else
 	{
-		// Apply projectile damage
+		HandleApplyProjectileDamage(HitPawn, Data);
 	}
 	
 	Destroy();
@@ -99,4 +99,19 @@ void AWarriorProjectileBase::OnProjectileBeginOverlap(
 	const FHitResult& SweepResult)
 {
 	
+}
+
+void AWarriorProjectileBase::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayload)
+{
+	checkf(ProjectileDamageEffectSpecHandle.IsValid(), TEXT("Forgot to assign a valid spec handle to the projectile: %s"), *GetActorNameOrLabel());
+	
+	const bool bWasApplied = UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator<APawn>(), InHitPawn, ProjectileDamageEffectSpecHandle);
+	
+	if (bWasApplied)
+	{
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			InHitPawn, 
+			WarriorGameplayTags::Shared_Event_HitReact, 
+			InPayload);
+	}
 }

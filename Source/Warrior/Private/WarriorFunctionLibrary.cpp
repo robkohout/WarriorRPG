@@ -139,6 +139,16 @@ bool UWarriorFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefende
 	return DotResult < Theshold;
 }
 
+bool UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UWarriorAbilitySystemComponent* SourceASC = NativeGetWarriorASCFromActor(InInstigator);
+	UWarriorAbilitySystemComponent* TargetASC = NativeGetWarriorASCFromActor(InTargetActor);
+
+	const FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
+
 FGenericTeamId UWarriorFunctionLibrary::NativeGetHeroTeamId()
 {
 	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
