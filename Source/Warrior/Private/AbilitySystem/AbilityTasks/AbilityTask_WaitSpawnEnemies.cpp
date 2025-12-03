@@ -70,17 +70,19 @@ void UAbilityTask_WaitSpawnEnemies::OnEnemyClassLoaded()
 		{
 			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
 		}
+
 		EndTask();
+
 		return;
 	}
-	
+
 	TArray<AWarriorEnemyCharacter*> SpawnedEnemies;
-	
+
 	FActorSpawnParameters SpawnParam;
 	SpawnParam.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-	
+
 	for (int32 i = 0; i < CachedNumToSpawn; i++)
-	{
+	{   
 		FVector RandomLocation;
 		UNavigationSystemV1::K2_GetRandomReachablePointInRadius(this, CachedSpawnOrigin, RandomLocation, CachedRandomSpawnRadius);
 		
@@ -94,19 +96,19 @@ void UAbilityTask_WaitSpawnEnemies::OnEnemyClassLoaded()
 		{
 			SpawnedEnemies.Add(SpawnedEnemy);
 		}
-		
-		if (ShouldBroadcastAbilityTaskDelegates())
-		{
-			if (!SpawnedEnemies.IsEmpty())
-			{
-				OnSpawnFinished.Broadcast(SpawnedEnemies);
-			}
-			else
-			{
-				DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
-			}
-		}
-		
-		EndTask();
 	}
+
+	if (ShouldBroadcastAbilityTaskDelegates())
+	{   
+		if (!SpawnedEnemies.IsEmpty())
+		{
+			OnSpawnFinished.Broadcast(SpawnedEnemies);
+		}
+		else
+		{
+			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
+		}
+	}
+
+	EndTask();
 }
