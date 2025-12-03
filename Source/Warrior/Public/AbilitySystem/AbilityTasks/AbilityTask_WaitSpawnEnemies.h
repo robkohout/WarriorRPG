@@ -45,6 +45,7 @@ public:
 	
 private:
 	void OnGameplayEventReceived(const FGameplayEventData* InPayload); 
+	void OnEnemyClassLoaded();
 	
 	FGameplayTag CachedEventTag;
 	TSoftClassPtr<AWarriorEnemyCharacter> CachedSoftEnemyClassToSpawn;
