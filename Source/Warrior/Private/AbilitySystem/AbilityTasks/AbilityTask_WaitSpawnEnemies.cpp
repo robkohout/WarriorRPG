@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/AbilityTasks/AbilityTask_WaitSpawnEnemies.h"
+#include "AbilitySystemComponent.h"
+#include "WarriorDebugHelper.h"
 
 UAbilityTask_WaitSpawnEnemies* UAbilityTask_WaitSpawnEnemies::WaitSpawnEnemies(
 	UGameplayAbility* OwningAbility,
@@ -21,4 +23,27 @@ UAbilityTask_WaitSpawnEnemies* UAbilityTask_WaitSpawnEnemies::WaitSpawnEnemies(
 	Node->CachedSpawnRotation = SpawnRotation;
 	
 	return Node;
+}
+
+void UAbilityTask_WaitSpawnEnemies::Activate()
+{
+	FGameplayEventMulticastDelegate& Delegate = AbilitySystemComponent->GenericGameplayEventCallbacks.FindOrAdd(CachedEventTag);
+	
+	DelegateHandle = Delegate.AddUObject(this, &ThisClass::OnGameplayEventReceived);
+}
+
+void UAbilityTask_WaitSpawnEnemies::OnDestroy(bool bInOwnerFinished)
+{
+	FGameplayEventMulticastDelegate& Delegate = AbilitySystemComponent->GenericGameplayEventCallbacks.FindOrAdd(CachedEventTag);
+	
+	Delegate.Remove(DelegateHandle);
+	
+	Super::OnDestroy(bInOwnerFinished);
+}
+
+void UAbilityTask_WaitSpawnEnemies::OnGameplayEventReceived(const FGameplayEventData* InPayload)
+{
+	Debug::Print(TEXT("Gameplay Event Received"));
+	
+	EndTask();
 }
