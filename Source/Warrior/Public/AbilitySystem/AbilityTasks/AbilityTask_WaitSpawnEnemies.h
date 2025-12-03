@@ -29,8 +29,7 @@ public:
 		TSoftClassPtr<AWarriorEnemyCharacter> SoftEnemyClassToSpawn,
 		int32 NumToSpawn,
 		const FVector& SpawnOrigin,
-		float RandomSpawnRadius,
-		const FRotator& SpawnRotation);
+		float RandomSpawnRadius);
 	
 	//~ Begin UGameplayTask Interface 
 	virtual void Activate() override;
@@ -52,6 +51,5 @@ private:
 	int32 CachedNumToSpawn;
 	FVector CachedSpawnOrigin;
 	float CachedRandomSpawnRadius;
-	FRotator CachedSpawnRotation;
 	FDelegateHandle DelegateHandle;
 };
