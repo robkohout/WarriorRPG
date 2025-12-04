@@ -54,7 +54,7 @@ void UAbilityTask_WaitSpawnEnemies::OnGameplayEventReceived(const FGameplayEvent
 		if (ShouldBroadcastAbilityTaskDelegates())
 		{
 			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
-		}
+		} 
 		EndTask();
 	}
 }
