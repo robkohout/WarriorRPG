@@ -4,10 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "WarriorTypes/WarriorStructTypes.h"
 #include "WarriorAbilitySystemComponent.generated.h"
 
-
-struct FWarriorHeroAbilitySet;
 
 UCLASS()
 class WARRIOR_API UWarriorAbilitySystemComponent : public UAbilitySystemComponent
@@ -21,6 +20,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Warrior | Ability", meta = (ApplyLevel = "1"))
 	void GrantHeroWeaponAbilities(
 		const TArray<FWarriorHeroAbilitySet>& InDefaultWeaponAbilities, 
+		const TArray<FWarriorHeroSpecialAbilitySet>& InSpecialWeaponAbilities,
 		int32 ApplyLevel,
 		TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
 	
