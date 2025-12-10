@@ -149,6 +149,12 @@ bool UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor*
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
 
+void UWarriorFunctionLibrary::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval, float& OutRemainingTime, 
+	EWarriorCountDownActionInput CountDownInput, EWarriorCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo)
+{
+	
+}
+
 FGenericTeamId UWarriorFunctionLibrary::NativeGetHeroTeamId()
 {
 	return FGenericTeamId(static_cast<uint8>(EWarriorTeamType::Hero));
