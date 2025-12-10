@@ -21,8 +21,9 @@ public:
 		ElapsedInterval(0.0f), 
 		ElapsedTimeSinceStart(0.0f)
 	{
-		
 	}
+	
+	virtual void UpdateOperation(FLatentResponse& Response) override;
 	
 	void CancelAction();
 	
