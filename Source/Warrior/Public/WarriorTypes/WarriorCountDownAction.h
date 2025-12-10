@@ -24,6 +24,8 @@ public:
 		
 	}
 	
+	void CancelAction();
+	
 private:
 	bool bNeedToCancel; 
 	float TotalCountDownTime;
