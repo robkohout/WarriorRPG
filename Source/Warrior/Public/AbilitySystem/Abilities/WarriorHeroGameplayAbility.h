@@ -34,6 +34,9 @@ public:
 		FGameplayTag InCurrentAttackTypeTag, 
 		int32 InUsedComboCount);
 	
+	UFUNCTION(BlueprintCallable, Category = "Warrior | Ability")
+	bool GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime, float& RemainingCooldownTime);
+	
 private:
 	TWeakObjectPtr<AWarriorHeroCharacter> CachedWarriorHeroCharacter;
 	TWeakObjectPtr<AWarriorHeroController> CachedWarriorHeroController;
