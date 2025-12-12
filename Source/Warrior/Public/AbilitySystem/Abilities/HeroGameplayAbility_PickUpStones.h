@@ -34,6 +34,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void CollectStones();
 	
+	UFUNCTION(BlueprintCallable)
+	void ConsumeStones();
+	
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float BoxTraceDistance = 50.f;
