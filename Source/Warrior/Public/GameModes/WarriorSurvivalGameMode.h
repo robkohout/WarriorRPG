@@ -65,6 +65,8 @@ private:
 	bool HasFinishedAllWaves() const;
 	void PreLoadNextWaveEnemies();
 	FWarriorEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
+	int32 TrySpawnWaveEnemies();
+	bool ShouldKeepSpawningEnemies() const;
 	
 	UPROPERTY()
 	EWarriorSurvivalGameModeState CurrentSurvivalGameModeState;
@@ -95,4 +97,13 @@ private:
 	
 	UPROPERTY()
 	TMap<TSoftClassPtr<AWarriorEnemyCharacter>, UClass*> PreLoadedEnemyClassMap;
+	
+	UPROPERTY()
+	int32 CurrentSpawnedEnemiesCounter = 0;
+	
+	UPROPERTY()
+	int32 TotalSpawnedEnemiesThisWaveCounter = 0;
+	
+	UPROPERTY()
+	TArray<AActor*> TargetPointsArray;
 };
