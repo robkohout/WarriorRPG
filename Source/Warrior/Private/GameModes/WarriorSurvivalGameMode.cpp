@@ -3,6 +3,7 @@
 
 #include "GameModes/WarriorSurvivalGameMode.h"
 #include "NavigationSystem.h"
+#include "WarriorDebugHelper.h"
 #include "Characters/WarriorEnemyCharacter.h"
 #include "Engine/AssetManager.h"
 #include "Engine/TargetPoint.h"
@@ -181,6 +182,8 @@ bool AWarriorSurvivalGameMode::ShouldKeepSpawningEnemies() const
 void AWarriorSurvivalGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 {
 	CurrentSpawnedEnemiesCounter--;
+	
+	Debug::Print(FString::Printf(TEXT("CurrentSpawnedEnemiesCounter: %i, TotalSpawnedEnemiesThisWaveCounter: %i"), CurrentSpawnedEnemiesCounter, TotalSpawnedEnemiesThisWaveCounter));
 	
 	if (ShouldKeepSpawningEnemies())
 	{
