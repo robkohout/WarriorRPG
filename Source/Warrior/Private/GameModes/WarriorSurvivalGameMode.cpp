@@ -9,6 +9,7 @@
 #include "Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
 
+
 void AWarriorSurvivalGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -195,5 +196,18 @@ void AWarriorSurvivalGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 		CurrentSpawnedEnemiesCounter = 0;
 		
 		SetCurrentSurvivalGameModeState(EWarriorSurvivalGameModeState::WaveCompleted);
+	}
+}
+
+void AWarriorSurvivalGameMode::RegisterSpawnedEnemies(const TArray<AWarriorEnemyCharacter*>& InEnemiesToRegister)
+{
+	for (AWarriorEnemyCharacter* SpawnedEnemy : InEnemiesToRegister)
+	{
+		if (SpawnedEnemy)
+		{
+			CurrentSpawnedEnemiesCounter++;
+			
+			SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
+		}
 	}
 }
