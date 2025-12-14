@@ -33,10 +33,15 @@ class WARRIOR_API UWarriorGameInstance : public UGameInstance
 	GENERATED_BODY()
 	
 public:
+	virtual void Init() override;
+	
 	UFUNCTION(BlueprintPure, meta = (GameplayTagFilter = "GameData.Level"))
 	TSoftObjectPtr<UWorld> GetGameLevelByTag(FGameplayTag InTag) const;
 	
 protected:
+	virtual void OnPreLoadMap(const FString& MapName);
+	virtual void OnDestinationWorldLoaded(UWorld* LoadedWorld);
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TArray<FWarriorGameLevelSet> GameLevelSets;
 };
