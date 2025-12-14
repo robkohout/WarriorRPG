@@ -19,3 +19,4 @@ Parry + RMB
 Rage Mode - Left Ctrl (When bar is full)
 Target Lock - Middle Mouse Button OR Thumb Mouse Button
 Change Lock Target - Mouse Move Left or Right
+Pause - Escape
