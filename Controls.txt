@@ -1,0 +1,21 @@
+Move - ASDW
+Look - Mouse
+Equip / Unequip - 1
+Roll - Move + Spacebar
+PickUp - E
+Light Attack - LMB (Left Mouse Button)
+Heavy Attack - RMB (Right Mouse Button) 
+Light Special Attack - Left Alt + LMB
+Heavy Special Attack - Left Alt + RMB
+Combos - 
+LMB LMB LMB LMB 
+LMB LMB LMB RMB 
+RMB RMB
+Block - Left Shift
+Parry - Left Shift (When attack arrives)
+Counter Attack - 
+Parry + LMB
+Parry + RMB
+Rage Mode - Left Ctrl (When bar is full)
+Target Lock - Middle Mouse Button OR Thumb Mouse Button
+Change Lock Target - Mouse Move Left or Right
