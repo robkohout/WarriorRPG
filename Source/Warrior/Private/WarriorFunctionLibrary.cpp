@@ -243,7 +243,7 @@ void UWarriorFunctionLibrary::SaveCurrentGameDifficulty(EWarriorGameDifficulty I
 		
 		const bool bWasSaved = UGameplayStatics::SaveGameToSlot(WarriorSaveGameObject, WarriorGameplayTags::GameData_SaveGame_Slot_1.GetTag().ToString(), 0);
 		
-		Debug::Print(bWasSaved ? TEXT("Difficulty Saved") : TEXT("Difficulty NOT Saved"));
+		//Debug::Print(bWasSaved ? TEXT("Difficulty Saved") : TEXT("Difficulty NOT Saved"));
 	}
 }
 
@@ -257,7 +257,7 @@ bool UWarriorFunctionLibrary::TryLoadSavedGameDifficulty(EWarriorGameDifficulty&
 		{
 			OutSavedDifficulty = WarriorSaveGameObject->SavedCurrentGameDifficulty;
 			
-			Debug::Print(TEXT("Loading Successful"), FColor::Green);
+			//Debug::Print(TEXT("Loading Successful"), FColor::Green);
 			
 			return true;
 		}
