@@ -33,8 +33,8 @@ class WARRIOR_API UWarriorGameInstance : public UGameInstance
 	GENERATED_BODY()
 	
 public:
-	UFUNCTION(BlueprintCallable, meta = (GameplayTagFilter = "GameData.Level"))
-	TSoftObjectPtr<UWorld> GetGameLevelByTag(FGameplayTag InTag);
+	UFUNCTION(BlueprintPure, meta = (GameplayTagFilter = "GameData.Level"))
+	TSoftObjectPtr<UWorld> GetGameLevelByTag(FGameplayTag InTag) const;
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
